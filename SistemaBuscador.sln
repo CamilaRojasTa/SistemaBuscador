@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaBuscador", "SistemaBuscador\SistemaBuscador.csproj", "{BCAA9799-12F7-48E4-86C5-8539E1E7C186}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaBuscadorTest", "SistemaBuscadorTest\SistemaBuscadorTest.csproj", "{4EAB190A-0959-4F73-9DBC-6E932F340227}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BCAA9799-12F7-48E4-86C5-8539E1E7C186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCAA9799-12F7-48E4-86C5-8539E1E7C186}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCAA9799-12F7-48E4-86C5-8539E1E7C186}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCAA9799-12F7-48E4-86C5-8539E1E7C186}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EAB190A-0959-4F73-9DBC-6E932F340227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EAB190A-0959-4F73-9DBC-6E932F340227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EAB190A-0959-4F73-9DBC-6E932F340227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EAB190A-0959-4F73-9DBC-6E932F340227}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {51F7554A-C9AF-4513-9021-28B9853DA485}
+	EndGlobalSection
+EndGlobal
