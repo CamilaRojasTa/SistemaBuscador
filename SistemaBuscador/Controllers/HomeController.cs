@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SistemaBuscador.Filters;
 using SistemaBuscador.Models;
 using SistemaBuscador.Repositories;
 using System;
@@ -10,7 +11,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace SistemaBuscador.Controllers
+
 {
+    [ServiceFilter(typeof(SessionFilter))]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -24,35 +27,14 @@ namespace SistemaBuscador.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        
+        
+        public IActionResult Privacy()           
         {
-            var repo = new LoginRepository();
-            if (ModelState.IsValid)
-            {
-                if (repo.UserExist(model.Usuario, model.Password))
-                {
-                    Guid sessionId = Guid.NewGuid();
-                    HttpContext.Session.SetString("sessionId", sessionId.ToString());
-                    Response.Cookies.Append("sessionId", sessionId.ToString());
-                    return View("Privacy");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "El usuario o contraseña no es valido");
-                }
-            }
-            return View("Index", model);  
-        }
-
-        public IActionResult Privacy()
-        {
-            string sessionId = Request.Cookies["sessionId"];
-            if (string.IsNullOrEmpty(sessionId) || !sessionId.Equals(HttpContext.Session.GetString("sessionId")))
-            {
-                return RedirectToAction("Index");
-            }
+            //onActionExecuting
+           
             return View();
+            //onActionExecuted
         }
 
         public IActionResult Prueba()
@@ -65,5 +47,7 @@ namespace SistemaBuscador.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
     }
 }
