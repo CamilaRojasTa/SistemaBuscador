@@ -27,20 +27,6 @@ namespace SistemaBuscador.Controllers
         {
             return View();
         }
-        
-        
-        public IActionResult Privacy()           
-        {
-            //onActionExecuting
-           
-            return View();
-            //onActionExecuted
-        }
-
-        public IActionResult Prueba()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
