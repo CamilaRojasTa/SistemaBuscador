@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaBuscador.Models;
+using SistemaBuscador.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,12 @@ namespace SistemaBuscador.Controllers
 {
     public class UsuariosController: Controller
     {
+        private readonly IUsuarioRepository _repository;
+
+        public UsuariosController(IUsuarioRepository repository)
+        {
+            _repository = repository;
+        }
         public IActionResult Index()
         {
             return View();
@@ -22,7 +29,14 @@ namespace SistemaBuscador.Controllers
         [HttpPost]
         public IActionResult NuevoUsuario(UsuarioCreacionModel model)
         {
-            return View();
+            if(ModelState.IsValid)
+            {
+                //guardar el usuario en la bd
+                _repository.InsertarUsuario(model);
+                return View("Index");
+            }
+
+            return View(model);
         }
     }
 }
