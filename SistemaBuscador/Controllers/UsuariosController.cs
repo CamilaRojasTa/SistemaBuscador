@@ -16,9 +16,10 @@ namespace SistemaBuscador.Controllers
         {
             _repository = repository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var listaUsuario = await _repository.ObtenerListaUsuarios();
+            return View(listaUsuario);
         }
 
         public IActionResult NuevoUsuario()
@@ -27,16 +28,42 @@ namespace SistemaBuscador.Controllers
 
         }
         [HttpPost]
-        public IActionResult NuevoUsuario(UsuarioCreacionModel model)
+        public async Task<IActionResult> NuevoUsuario(UsuarioCreacionModel model)
         {
             if(ModelState.IsValid)
             {
                 //guardar el usuario en la bd
-                _repository.InsertarUsuario(model);
-                return View("Index");
+                await _repository.InsertarUsuario(model);
+                return RedirectToAction("Index");
             }
 
             return View(model);
+        }
+         public async Task<IActionResult> ActualizarUsuario([FromRoute] int id)
+        {
+            var usuario = await _repository.ObtenerUsuarioPorId(id);
+            return View(usuario);
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> ActualizarUsuario(UsuarioEdicionModel model)
+        {
+            await _repository.ActualizarUsuario(model);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> CambiarPassword(int id)
+        {
+            ViewBag.idUsuario = id;
+            return View();
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> CambiarPassword(UsuarioCambioPasswordModel model)
+        {
+            await _repository.ActualizarPassword(model);
+            return RedirectToAction("Index");
         }
     }
 }
