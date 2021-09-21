@@ -94,5 +94,11 @@ namespace SistemaBuscador.Repositories
 
 
         }
+        public async Task EliminarUsuario(int id)
+        {
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(x => x.Id == id);
+            _context.Usuarios.Remove(usuario);
+            await _context.SaveChangesAsync();
+        }
     }
 }
