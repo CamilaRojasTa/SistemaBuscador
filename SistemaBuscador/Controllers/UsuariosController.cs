@@ -40,7 +40,7 @@ namespace SistemaBuscador.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(model);
+            return View("NuevoUsuario", model);
         }
 
 
