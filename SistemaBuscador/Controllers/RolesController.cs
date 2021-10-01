@@ -32,10 +32,13 @@ namespace SistemaBuscador.Controllers
             {
                 //Guardar en la bd
                 await _repositorio.InsertarRol(model);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Roles");
             }
-            return View(model);
+            return View("NuevoRol", model);
         }
+
+
+
         public async Task<IActionResult> ActualizarRol(int id)
         {
             var rol = await _repositorio.ObtenerRolPorId(id);
