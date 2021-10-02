@@ -21,10 +21,14 @@ namespace SistemaBuscador.Controllers
             var listaRoles = await _repositorio.ObtenerListaRoles();
             return View(listaRoles);
         }
+
         public IActionResult NuevoRol()
         {
             return View();
         }
+
+
+
         [HttpPost]
         public async Task<IActionResult> NuevoRol(RolCreacionModel model)
         {

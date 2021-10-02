@@ -1,41 +1,49 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SistemaBuscador.Entities;
 using SistemaBuscador.Models;
 using SistemaBuscador.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
 {
-    [TestClass]
+    //[TestClass]
     public class UsuarioRepositoryTest : TestBase
     {
-        [TestMethod]
-        public async Task InsertarUsuario()
-        {
+        //[TestMethod]
+       // public async Task InsertarUsuario()
+       // {
             //preparacion
             //revisar seguridad en contexto
             //var nombreBd = Guid.NewGuid().ToString();           
             //var context = BuildContext(nombreBd);
-            // var repo = new UsuarioRepository(context );
-            // var modelo = new UsuarioCreacionModel() { Nombres = "Usuario Test" };
+            
+            //var repo = new UsuarioRepository(context);
+            //var model = new RolCreacionModel() { Nombre = "Rol Test" };
+           // var modelo = new UsuarioCreacionModel() { Nombres = "Usuario Test" };
 
             //ejecucion
-            //await repo.InsertarUsuario(modelo);
-            // var context2 = BuildContext(nombreBd);
-            //var list = await context2.Usuarios.ToListAsync();
-            // var resultado = list.Count();
+           // await repo.InsertarUsuario(modelo);
+            //var context2 = BuildContext(nombreBd);
+           // var list = await context2.Usuarios.ToListAsync();
+            //var resultado = list.Count();
 
             //Verificacion
-            // Assert.AreEqual(1, resultado);
+            //Assert.AreEqual(1, resultado);
 
-        }
+       // }
 
-        [TestMethod]
-        public async Task ObtenerUsuarioPorId()
-        {
+
+
+
+
+       // [TestMethod]
+        //public async Task ObtenerUsuarioPorId()
+       // {
             //preparacion
             //revisar context seguridad
             // var nombreBd = Guid.NewGuid().ToString();
@@ -51,11 +59,11 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
 
             //verificacion
             //Assert.IsNotNull(rolDeLaBd);
-        }
+       // }
 
-        [TestMethod]
-        public async Task ActualizarUsuario()
-        {
+       // [TestMethod]
+       // public async Task ActualizarUsuario()
+        //{
             //preparacion
             //revisar que viene de from riute no de un model
             //var nombreBd = Guid.NewGuid().ToString();
@@ -75,34 +83,36 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
 
             //verificacion
             //Assert.AreEqual("Rol 1 Modificado", resultado);
-        }
+       // }
 
-        [TestMethod]
-        public async Task ActualizarPassword()
-        {
-        }
+       // [TestMethod]
+       // public async Task ActualizarPassword()
+       // {
+       // }
 
-        [TestMethod]
-        public async Task EliminarUsuario()
-        {
+       
+        
+        //[TestMethod]
+        //public async Task EliminarUsuario()
+        //{
             //preparacion
             //var nombreBd = Guid.NewGuid().ToString();
             // var context = BuildContext(nombreBd);
-            //var rol = new Rol() { Nombre = "Rol 1" };
-            //context.Roles.Add(rol);
-            //await context.SaveChangesAsync();
+            //var usuario = new Usuario() { Nombres = "Usuario 1" };
+            //context.Usuarios.Add(usuario);
+           // await context.SaveChangesAsync();
 
             //var context2 = BuildContext(nombreBd);
-            // var repo = new RolRepositorio(context2);
+           // var repo = new UsuarioRepository(context2);
 
             //ejecucion
-            //await repo.EliminarRol(1);
+           // await repo.EliminarUsuario(1);
             // var context3 = BuildContext(nombreBd);
-            //var listaRoles = await context3.Roles.ToListAsync();
-            //var resultado = listaRoles.Count;
+           // var listaUsuarios = await context3.Usuarios.ToListAsync();
+            //var resultado = listaUsuarios.Count;
 
             //verificacion
             // Assert.AreEqual(0, resultado);
-        }
+        //}
     }
 }
