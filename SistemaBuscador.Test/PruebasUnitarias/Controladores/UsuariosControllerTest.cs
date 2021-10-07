@@ -4,6 +4,7 @@ using Moq;
 using SistemaBuscador.Controllers;
 using SistemaBuscador.Models;
 using SistemaBuscador.Repositories;
+using SistemaBuscador.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,8 +21,11 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Controladores
         {
             //preparacion
             var usuarioService = new Mock<IUsuarioRepository>();
+            //var serviceSeguridad = new Mock<ISeguridad>();
+
             var model = new UsuarioCreacionModel();
             var controller = new UsuariosController(usuarioService.Object);
+            
 
             //ejecucion
             controller.ModelState.AddModelError(string.Empty, "Datos invalidos");

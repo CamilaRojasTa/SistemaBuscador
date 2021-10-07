@@ -13,11 +13,13 @@ namespace SistemaBuscador.Repositories
     {
         private readonly AplicationDbContext _context;
         private readonly ISeguridad _seguridad;
+        private readonly IRolRepositorio _rolRepositorio;
 
-        public UsuarioRepository(AplicationDbContext context, ISeguridad seguridad)
+        public UsuarioRepository(AplicationDbContext context, ISeguridad seguridad, IRolRepositorio rolRepositorio)
         {
             _context = context;
             _seguridad = seguridad;
+            _rolRepositorio = rolRepositorio;
         }
         public async Task InsertarUsuario(UsuarioCreacionModel model)
         {
