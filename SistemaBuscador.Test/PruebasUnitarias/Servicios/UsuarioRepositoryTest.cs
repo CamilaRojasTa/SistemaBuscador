@@ -96,39 +96,32 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
 
 
 
-        // [TestMethod]
-        // public async Task ActualizarPassword()
-        //{
-        //  var nombreBd = Guid.NewGuid().ToString();
-        // var context = BuildContext(nombreBd);
-        // context.Usuarios.Add(new Usuario()
-        // {
-        //NombreUsuario = "Usuario Test",
-        //Nombres = "Nombre test",
-        // Apellidos = "Apellido Test",
-        //Password = " Hola123 ",
-        //RolId = 1,
-        //Id = 1,
+         [TestMethod]
+         public async Task ActualizarPassword()
+        {
+         var nombreBd = Guid.NewGuid().ToString();
+         var context = BuildContext(nombreBd);
+         var user = new Usuario(){NombreUsuario = "Usuario Test",Nombres = "Nombre test",Apellidos = "Apellido Test",
+                                                  Password = "Hola123", RolId = 1,Id = 1,};
+         context.Usuarios.Add(user);
+         await context.SaveChangesAsync();
 
-        // });
-        //await context.SaveChangesAsync();
-        //var context2 = BuildContext(nombreBd);
-        // var serviceSeguridad = new Mock<ISeguridad>();
+         var context2 = BuildContext(nombreBd);
+         var serviceSeguridad = new Mock<ISeguridad>();
+         var serviceRol = new Mock<IRolRepositorio>();
+         var repo = new UsuarioRepository(context2, serviceSeguridad.Object, serviceRol.Object);
+         var model = new UsuarioCambioPasswordModel() { Id = 1, Password ="Nueva321",RePassword ="Nueva321"};
+         serviceSeguridad.Setup(x => x.Encriptar(It.IsAny<string>())).Returns("Nueva321");
 
-        //serviceSeguridad.Setup(x => x.Encriptar(It.IsAny<string>())).Returns("Hola123");
-        //var serviceRol = new Mock<IRolRepositorio>();
-        //var repo = new UsuarioRepository(context2, serviceSeguridad.Object, serviceRol.Object);
-        //var model = new UsuarioCambioPasswordModel(){Password="Nueva321",RePassword = "Nueva321", Id = 1, };
-
-        //ejecucion
-        //await repo.ActualizarPassword(model);
-        //var context3 = BuildContext(nombreBd);
-        // var passwordModificado = await context3.Usuarios.FirstOrDefaultAsync(x => x.Id == 1);
-        //var resultado = passwordModificado.Password;
+            //ejecucion
+         await repo.ActualizarPassword(model);
+         var context3 = BuildContext(nombreBd);
+         var passwordModificado = await context3.Usuarios.FirstOrDefaultAsync(x => x.Id == 1);
+         var resultado = passwordModificado.Password;
 
         //verificacion
-        //Assert.AreEqual("Nueva321", resultado);
-        //}
+        Assert.AreEqual("Nueva321", resultado);
+        }
 
 
 
