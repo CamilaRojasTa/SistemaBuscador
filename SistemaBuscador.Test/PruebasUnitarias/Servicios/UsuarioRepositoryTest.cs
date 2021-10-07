@@ -24,9 +24,11 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
             var nombreBd = Guid.NewGuid().ToString();           
             var context = BuildContext(nombreBd);
                       
-            var serviceSeguridad = new Mock<ISeguridad>();
-            var serviceRol = new Mock<IRolRepositorio>();
-            var repo = new UsuarioRepository(context, serviceSeguridad.Object, serviceRol.Object);           
+            var seguridad = new Mock<ISeguridad>();
+            seguridad.Setup(x => x.Encriptar(It.IsAny<string>())).Returns("aabbccddeeffgg");
+            var rolRepo = new RolRepositorio(context);
+
+            var repo = new UsuarioRepository(context, seguridad.Object, rolRepo);            
             var modelo = new UsuarioCreacionModel() 
             { NombreUsuario = "Usuario Test",Nombres="Nombre test",
              Apellidos= "Apellido Test", Password=" Hola123 ",
@@ -38,7 +40,7 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
             var list = await context2.Usuarios.ToListAsync();
             var resultado = list.Count();
 
-            //Verificacion
+            //verificacion
             Assert.AreEqual(1, resultado);
 
         }
@@ -55,9 +57,9 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
             context.Usuarios.Add(usuario);
             await context.SaveChangesAsync();
             var context2 = BuildContext(nombreBd);
-            var serviceSeguridad = new Mock<ISeguridad>();
+            var seguridad = new Mock<ISeguridad>();
             var serviceRol = new Mock<IRolRepositorio>();
-            var repo = new UsuarioRepository(context2, serviceSeguridad.Object, serviceRol.Object);
+            var repo = new UsuarioRepository(context2, seguridad.Object, serviceRol.Object);
 
             //ejecucion
             var usuarioDeLaBd = await repo.ObtenerUsuarioPorId(1);
@@ -70,30 +72,29 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
          [TestMethod]
          public async Task ActualizarUsuario()
         {
-        //preparacion
-        
-        var nombreBd = Guid.NewGuid().ToString();
-        var context = BuildContext(nombreBd);
-            var usuario = new Usuario() {NombreUsuario = "Usuario Test", Nombres = "Nombre test", Apellidos = "Apellido Test",
-                                         Password = " Hola123 ",RolId = 1,Id = 1,};
-        context.Usuarios.Add(usuario);
-        await context.SaveChangesAsync();
+            //preparacion       
+            var nombreBd = Guid.NewGuid().ToString();
+            var context = BuildContext(nombreBd);
+            var usuario = new Usuario() {NombreUsuario = "Usuario Test", Nombres = "Nombre test", 
+                                         Apellidos = "Apellido Test", Password = " Hola123 ",RolId = 1,Id = 1,};
+            context.Usuarios.Add(usuario);
+            await context.SaveChangesAsync();
 
-        var context2 = BuildContext(nombreBd);
-        var serviceSeguridad = new Mock<ISeguridad>();
-        var serviceRol = new Mock<IRolRepositorio>();
-        var repo = new UsuarioRepository(context2, serviceSeguridad.Object, serviceRol.Object);
-            var model = new UsuarioEdicionModel() { Nombres = "Usuario Modificado", NombreUsuario = "Nombre Usuario Modificado",
+            var context2 = BuildContext(nombreBd);
+            var seguridad = new Mock<ISeguridad>();
+            var serviceRol = new Mock<IRolRepositorio>();
+            var repo = new UsuarioRepository(context2, seguridad.Object, serviceRol.Object);
+            var model = new UsuarioEdicionModel(){ Nombres = "Usuario Modificado", NombreUsuario = "Nombre Usuario Modificado",
                                                    Apellidos = "Apellido Modificado",Id = 1, RolId = 1};
-        //ejecucion
-        await repo.ActualizarUsuario(model);
-        var context3 = BuildContext(nombreBd);
-        var usuarioModificado = await context3.Usuarios.FirstOrDefaultAsync(x => x.Id == 1);
-        var resultado = usuarioModificado.Nombres;
+            //ejecucion
+            await repo.ActualizarUsuario(model);
+            var context3 = BuildContext(nombreBd);
+            var usuarioModificado = await context3.Usuarios.FirstOrDefaultAsync(x => x.Id == 1);
+            var resultado = usuarioModificado.Nombres;
 
-        //verificacion
-        Assert.AreEqual("Usuario Modificado", resultado);
-        }
+            //verificacion
+            Assert.AreEqual("Usuario Modificado", resultado);
+            }
 
 
 
@@ -101,6 +102,7 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
          [TestMethod]
          public async Task ActualizarPassword()
         {
+         //preparacion
          var nombreBd = Guid.NewGuid().ToString();
          var context = BuildContext(nombreBd);
          var user = new Usuario(){NombreUsuario = "Usuario Test",Nombres = "Nombre test",Apellidos = "Apellido Test",
@@ -109,13 +111,13 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
          await context.SaveChangesAsync();
 
          var context2 = BuildContext(nombreBd);
-         var serviceSeguridad = new Mock<ISeguridad>();
+         var seguridad = new Mock<ISeguridad>();
          var serviceRol = new Mock<IRolRepositorio>();
-         var repo = new UsuarioRepository(context2, serviceSeguridad.Object, serviceRol.Object);
+         var repo = new UsuarioRepository(context2, seguridad.Object, serviceRol.Object);
          var model = new UsuarioCambioPasswordModel() { Id = 1, Password ="Nueva321",RePassword ="Nueva321"};
-         serviceSeguridad.Setup(x => x.Encriptar(It.IsAny<string>())).Returns("Nueva321");
+         seguridad.Setup(x => x.Encriptar(It.IsAny<string>())).Returns("Nueva321");
 
-            //ejecucion
+         //ejecucion
          await repo.ActualizarPassword(model);
          var context3 = BuildContext(nombreBd);
          var passwordModificado = await context3.Usuarios.FirstOrDefaultAsync(x => x.Id == 1);
@@ -141,9 +143,9 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
            await context.SaveChangesAsync();
 
            var context2 = BuildContext(nombreBd);
-           var serviceSeguridad = new Mock<ISeguridad>();
+           var seguridad = new Mock<ISeguridad>();
            var serviceRol = new Mock<IRolRepositorio>();
-           var repo = new UsuarioRepository(context2, serviceSeguridad.Object, serviceRol.Object);
+           var repo = new UsuarioRepository(context2, seguridad.Object, serviceRol.Object);
 
            //ejecucion
            await repo.EliminarUsuario(1);

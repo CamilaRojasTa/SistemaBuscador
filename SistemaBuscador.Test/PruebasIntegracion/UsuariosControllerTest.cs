@@ -51,38 +51,6 @@ namespace SistemaBuscador.Test.PruebasIntegracion
 
         }
 
-        [TestMethod]
-
-        public async Task ActualizarUsuario()
-
-        {
-            //preparacion
-            var nombreBd = Guid.NewGuid().ToString();
-            var context = BuildContext(nombreBd);
-            var seguridad = new Seguridad();
-            var rolService = new RolRepositorio(context);
-            var usuarioService = new UsuarioRepository(context, seguridad, rolService);           
-            var usuario = new Usuario() 
-            {NombreUsuario = "Usuario Test", Nombres = "Nombre test",
-            Apellidos = "Apellido Test",Password = " Hola123 ",RolId = 1};
-            context.Usuarios.Add(usuario);
-            await context.SaveChangesAsync();
-
-            var model = new UsuarioEdicionModel() 
-            { Nombres = "Usuario Test Modificado", 
-            NombreUsuario="Nombre Usuario Modificado", 
-            Apellidos="Apellido Modificado", Id=1, RolId=1 };
-
-            var controller = new UsuariosController(usuarioService);
-
-            //ejecucion
-            await controller.ActualizarUsuario(model);
-            var context2 = BuildContext(nombreBd);
-            var usuarioDb = await context2.Usuarios.FirstOrDefaultAsync(x => x.Id == 1);
-            var resultado = usuarioDb.Nombres;
-
-            //validacion
-            Assert.AreEqual("Usuario Test Modificado", resultado);
-        }
+       
     }
 }

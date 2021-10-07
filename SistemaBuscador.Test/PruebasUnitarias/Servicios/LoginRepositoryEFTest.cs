@@ -39,25 +39,23 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
         [TestMethod]
         public async Task UsuarioExiste()
         {
-            //Preparacion
-            var nombreBd = Guid.NewGuid().ToString();
-            var context = BuildContext(nombreBd);
-            context.Usuarios.Add(new Usuario() { NombreUsuario = "Usuario1", Password = "aabbccddeeffgghhii" });
-            await context.SaveChangesAsync();
-            var seguridad = new Mock<ISeguridad>();
-            seguridad.Setup(x => x.Encriptar(It.IsAny<string>())).Returns("aabbccddeeffgghhii");
-            var context2 = BuildContext(nombreBd);
+             //Preparacion
+             var nombreBd = Guid.NewGuid().ToString();
+             var context = BuildContext(nombreBd);
+             context.Usuarios.Add(new Usuario() { NombreUsuario = "Usuario1", Password = "aabbccddeeffgghhii" });
+             await context.SaveChangesAsync();
+             var seguridad = new Mock<ISeguridad>();
+             seguridad.Setup(x => x.Encriptar(It.IsAny<string>())).Returns("aabbccddeeffgghhii");
+             var context2 = BuildContext(nombreBd);
 
-            //Ejecucion
-            var nombreUsuario = "Usuario1";
-            var password = "Password1";
-            var repo = new LoginRepositoryEF(context2,seguridad.Object);
-            var respuesta = await repo.UserExist(nombreUsuario, password);
+             //Ejecucion
+             var nombreUsuario = "Usuario1";
+             var password = "Password1";
+             var repo = new LoginRepositoryEF(context2,seguridad.Object);
+             var respuesta = await repo.UserExist(nombreUsuario, password);
 
-            //Verificacion
-            Assert.IsTrue(respuesta);
-
-
+             //Verificacion
+             Assert.IsTrue(respuesta);
         }
     }
 }

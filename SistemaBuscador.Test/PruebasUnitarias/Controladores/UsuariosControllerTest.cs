@@ -21,37 +21,30 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Controladores
         {
             //preparacion
             var usuarioService = new Mock<IUsuarioRepository>();
-            //var serviceSeguridad = new Mock<ISeguridad>();
-
             var model = new UsuarioCreacionModel();
-            var controller = new UsuariosController(usuarioService.Object);
-            
+            var controller = new UsuariosController(usuarioService.Object);         
 
             //ejecucion
             controller.ModelState.AddModelError(string.Empty, "Datos invalidos");
             var resultado = await controller.NuevoUsuario(model) as ViewResult;
 
-            //validacion
+            //verificacion
             Assert.AreEqual(resultado.ViewName, "NuevoUsuario");
-
         }
 
         [TestMethod]
         public async Task NuevoUsuario_modelo_valido()
         {
-            //preparacion
-            var usuarioService = new Mock<IUsuarioRepository>();
-            var model = new UsuarioCreacionModel();
-            var controller = new UsuariosController(usuarioService.Object);
+             //preparacion
+             var usuarioService = new Mock<IUsuarioRepository>();
+             var model = new UsuarioCreacionModel();
+             var controller = new UsuariosController(usuarioService.Object);
 
-            //ejecucion
-            
-            var resultado = await controller.NuevoUsuario(model) as RedirectToActionResult;
+             //ejecucion           
+             var resultado = await controller.NuevoUsuario(model) as RedirectToActionResult;
 
-            //validacion
-            Assert.AreEqual(resultado.ActionName, "Index");
-
+             //verificacion
+             Assert.AreEqual(resultado.ActionName, "Index");
         }
-
     }
 }

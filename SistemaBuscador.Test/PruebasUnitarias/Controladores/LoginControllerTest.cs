@@ -26,22 +26,20 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Controladores
             controller.ModelState.AddModelError(string.Empty, "Datos invalidos");
             var resultado = await controller.Login(model)as ViewResult;
 
-            //Validacion
+            //Verificacion
             Assert.AreEqual(resultado.ViewName, "Index");
         }
 
         [TestMethod]
         public async Task  LoginUsuarioNoExiste()
         {
-            //Preparacion
-            //var loginService = new LoginRepositoryEFFalse();
+            //Preparacion           
             var loginService = new Mock<ILoginRepository>();
             loginService.Setup(x => 
             x.UserExist(
                 It.IsAny<string>(), 
                 It.IsAny<string>()))
                 .Returns(Task.FromResult(false));
-
             var model = new LoginViewModel() { Usuario = "Usuario1", Password = "Password1" };
 
             //Ejecucion
@@ -56,8 +54,7 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Controladores
         [TestMethod]
         public async Task LoginUsuarioExiste()
         {
-            //Preparacion
-            //var loginService = new LoginRepositoryEFTrue();
+            //Preparacion           
             var loginService = new Mock<ILoginRepository>();
             loginService.Setup(x=>
             x.UserExist(
@@ -74,9 +71,6 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Controladores
             //Validacion
             Assert.AreEqual(resultado.ActionName, "Index");
             Assert.AreEqual(resultado.ControllerName, "Home");
-
         }
-
-
     }
 }

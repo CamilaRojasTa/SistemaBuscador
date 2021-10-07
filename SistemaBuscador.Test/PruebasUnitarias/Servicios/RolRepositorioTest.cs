@@ -67,6 +67,7 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
             var context2 = BuildContext(nombreBd);
             var repo = new RolRepositorio(context2);
             var model = new RolEdicionModel() { Id = 1, Nombre = "Rol 1 Modificado" };
+
             //ejecucion
             await repo.ActualizarRol(model);
             var context3 = BuildContext(nombreBd);

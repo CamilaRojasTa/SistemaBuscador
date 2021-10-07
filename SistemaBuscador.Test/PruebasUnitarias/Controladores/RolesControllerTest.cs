@@ -26,7 +26,7 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Controladores
             controller.ModelState.AddModelError(string.Empty, "Datos invalidos");
             var resultado = await controller.NuevoRol(model)as ViewResult;
 
-            //validacion
+            //verificacion
             Assert.AreEqual(resultado.ViewName, "NuevoRol");
         }
 
@@ -38,17 +38,12 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Controladores
             var model = new RolCreacionModel();
             var controller = new RolesController(rolService.Object);
 
-            //ejecucion
-            
+            //ejecucion           
             var resultado = await controller.NuevoRol(model) as RedirectToActionResult;
 
-            //validacion
-            
+            //validacion            
             Assert.AreEqual(resultado.ActionName, "Index");
             Assert.AreEqual(resultado.ControllerName, "Roles");
         }
-
-
-
     }
 }
