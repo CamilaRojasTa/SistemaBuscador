@@ -74,7 +74,7 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
         var nombreBd = Guid.NewGuid().ToString();
         var context = BuildContext(nombreBd);
             var usuario = new Usuario() {NombreUsuario = "Usuario Test", Nombres = "Nombre test", Apellidos = "Apellido Test",
-                Password = " Hola123 ",RolId = 1,Id = 1,};
+                                         Password = " Hola123 ",RolId = 1,Id = 1,};
         context.Usuarios.Add(usuario);
         await context.SaveChangesAsync();
 
@@ -82,7 +82,8 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
         var serviceSeguridad = new Mock<ISeguridad>();
         var serviceRol = new Mock<IRolRepositorio>();
         var repo = new UsuarioRepository(context2, serviceSeguridad.Object, serviceRol.Object);
-            var model = new UsuarioEdicionModel() { Nombres = "Usuario Modificado", NombreUsuario = "Nombre Usuario Modificado",Apellidos = "Apellido Modificado",Id = 1, RolId = 1};
+            var model = new UsuarioEdicionModel() { Nombres = "Usuario Modificado", NombreUsuario = "Nombre Usuario Modificado",
+                                                   Apellidos = "Apellido Modificado",Id = 1, RolId = 1};
         //ejecucion
         await repo.ActualizarUsuario(model);
         var context3 = BuildContext(nombreBd);
