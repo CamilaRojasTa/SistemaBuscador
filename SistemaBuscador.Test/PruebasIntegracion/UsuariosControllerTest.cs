@@ -21,16 +21,23 @@ namespace SistemaBuscador.Test.PruebasIntegracion
         public async Task NuevoUsuario()
 
         {
+            
             //preparacion
             var nombreBd = Guid.NewGuid().ToString();
-            var context = BuildContext(nombreBd);            
-            var serviceSeguridad = new Mock<ISeguridad>();
-            var serviceRol = new Mock<IRolRepositorio>();            
-            var usuarioService = new UsuarioRepository(context, serviceSeguridad.Object, serviceRol.Object);
-            var model = new UsuarioCreacionModel(){NombreUsuario = "Usuario Test", Nombres = "Nombre test",
-                                                   Apellidos = "Apellido Test", Password = " Hola123 ",
-                                                   RePassword = " Hola123", RolId = 1};
-            var controller = new UsuariosController(usuarioService);
+            var context = BuildContext(nombreBd);
+            var seguridad = new Seguridad();
+            var rolService = new RolRepositorio(context);
+            var usuarioSevice = new UsuarioRepository(context, seguridad, rolService);
+            var model = new UsuarioCreacionModel()
+            {
+                NombreUsuario = "Usuario Test",
+                Nombres = "Nombre test",
+                Apellidos = "Apellido Test",
+                Password = " Hola123 ",
+                RePassword = " Hola123",
+                RolId = 1
+            };
+            var controller = new UsuariosController(usuarioSevice);
 
             //ejecucion
             await controller.NuevoUsuario(model);
@@ -40,7 +47,6 @@ namespace SistemaBuscador.Test.PruebasIntegracion
 
             //validacion
             Assert.AreEqual(1, resultado);
-
 
 
         }
@@ -53,17 +59,20 @@ namespace SistemaBuscador.Test.PruebasIntegracion
             //preparacion
             var nombreBd = Guid.NewGuid().ToString();
             var context = BuildContext(nombreBd);
-            var serviceSeguridad = new Mock<ISeguridad>();
-            var serviceRol = new Mock<IRolRepositorio>();
-            var usuarioService = new UsuarioRepository(context, serviceSeguridad.Object, serviceRol.Object);           
-            var usuario = new Usuario() {NombreUsuario = "Usuario Test", Nombres = "Nombre test",
-                                         Apellidos = "Apellido Test",Password = " Hola123 ",RolId = 1};
+            var seguridad = new Seguridad();
+            var rolService = new RolRepositorio(context);
+            var usuarioService = new UsuarioRepository(context, seguridad, rolService);           
+            var usuario = new Usuario() 
+            {NombreUsuario = "Usuario Test", Nombres = "Nombre test",
+            Apellidos = "Apellido Test",Password = " Hola123 ",RolId = 1};
             context.Usuarios.Add(usuario);
             await context.SaveChangesAsync();
 
-            var model = new UsuarioEdicionModel() { Nombres = "Usuario Test Modificado", 
-                                                    NombreUsuario="Nombre Usuario Modificado", 
-                                                    Apellidos="Apellido Modificado", Id=1, RolId=1 };
+            var model = new UsuarioEdicionModel() 
+            { Nombres = "Usuario Test Modificado", 
+            NombreUsuario="Nombre Usuario Modificado", 
+            Apellidos="Apellido Modificado", Id=1, RolId=1 };
+
             var controller = new UsuariosController(usuarioService);
 
             //ejecucion

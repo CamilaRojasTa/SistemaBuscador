@@ -27,9 +27,10 @@ namespace SistemaBuscador.Test.PruebasUnitarias.Servicios
             var serviceSeguridad = new Mock<ISeguridad>();
             var serviceRol = new Mock<IRolRepositorio>();
             var repo = new UsuarioRepository(context, serviceSeguridad.Object, serviceRol.Object);           
-            var modelo = new UsuarioCreacionModel() { NombreUsuario = "Usuario Test",Nombres="Nombre test",
-                                                      Apellidos= "Apellido Test", Password=" Hola123 ",
-                                                      RePassword=" Hola123", RolId=1 };
+            var modelo = new UsuarioCreacionModel() 
+            { NombreUsuario = "Usuario Test",Nombres="Nombre test",
+             Apellidos= "Apellido Test", Password=" Hola123 ",
+             RePassword=" Hola123", RolId=1 };
            
             //ejecucion
             await repo.InsertarUsuario(modelo);
